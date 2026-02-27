@@ -1,7 +1,9 @@
+import SearchBar from '../SearchBar/SearchBar';
+
 function App() {
   return (
     <>
-      <h1>Vite + React</h1>
+      <SearchBar />
     </>
   );
 }

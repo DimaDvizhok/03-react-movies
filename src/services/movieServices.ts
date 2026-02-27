@@ -18,14 +18,9 @@ export const fetchMovies = async (query: string) => {
     },
   };
 
-  try {
-    const response = await axios.get<MoviesResponse>(
-      'https://api.themoviedb.org/3/search/movie',
-      options
-    );
-    return response.data.results;
-  } catch (error) {
-    console.error('Error fetching movies:', error);
-    return [];
-  }
+  const response = await axios.get<MoviesResponse>(
+    'https://api.themoviedb.org/3/search/movie',
+    options
+  );
+  return response.data.results;
 };

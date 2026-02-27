@@ -14,11 +14,9 @@ function App() {
   const [isError, setIsError] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  // const openModal = () => setIsModalOpen(true);
-  // const closeModal = () => setIsModalOpen(false);
-
   const handleSearch = async (query: string) => {
     try {
+      setSelectedMovie(null);
       setMovies([]);
       setIsError(false);
       setIsLoad(true);
@@ -30,6 +28,7 @@ function App() {
       }
       setMovies(data);
     } catch {
+      toast.error('There was an error, please try again...');
       setIsError(true);
     } finally {
       setIsLoad(false);

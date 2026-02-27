@@ -6,7 +6,7 @@ interface MoviesResponse {
 }
 const TMDB_TOKEN = import.meta.env.VITE_TMDB_TOKEN;
 
-export const fetchMovies = async (query: string) => {
+export const fetchMovies = async (query: string): Promise<Movie[]> => {
   const options = {
     params: {
       query: query,

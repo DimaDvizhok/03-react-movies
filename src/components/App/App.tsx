@@ -5,12 +5,17 @@ import { type Movie } from '../../types/movie';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Loader from '../Loader/Loader';
 import MovieGrid from '../MovieGrid/MovieGrid';
+import MovieModal from '../MovieModal/MovieModal';
 import SearchBar from '../SearchBar/SearchBar';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoad, setIsLoad] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+
+  // const openModal = () => setIsModalOpen(true);
+  // const closeModal = () => setIsModalOpen(false);
 
   const handleSearch = async (query: string) => {
     try {
@@ -49,7 +54,13 @@ function App() {
       {movies.length > 0 && (
         <MovieGrid
           movies={movies}
-          onSelect={() => toast.success('Movie selected!')}
+          onSelect={movie => setSelectedMovie(movie)}
+        />
+      )}
+      {selectedMovie && (
+        <MovieModal
+          movie={selectedMovie}
+          onClose={() => setSelectedMovie(null)}
         />
       )}
     </>

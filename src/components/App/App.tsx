@@ -2,21 +2,29 @@ import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { fetchMovies } from '../../services/movieServices';
 import { type Movie } from '../../types/movie';
+import Loader from '../Loader/Loader';
 import MovieGrid from '../MovieGrid/MovieGrid';
 import SearchBar from '../SearchBar/SearchBar';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoad, setIsLoad] = useState(false);
 
   const handleSearch = async (query: string) => {
-    setMovies([]);
-    const data = await fetchMovies(query);
+    try {
+      setMovies([]);
+      setIsLoad(true);
+      const data = await fetchMovies(query);
 
-    if (data.length === 0) {
-      toast.error('No movies found for your request.');
-      return;
+      if (data.length === 0) {
+        toast.error('No movies found for your request.');
+        return;
+      }
+      setMovies(data);
+    } catch {
+    } finally {
+      setIsLoad(false);
     }
-    setMovies(data);
   };
 
   return (
@@ -32,6 +40,7 @@ function App() {
         }}
       />
       <SearchBar onSubmit={handleSearch} />
+      {isLoad && <Loader />}
       {movies.length > 0 && (
         <MovieGrid
           movies={movies}
